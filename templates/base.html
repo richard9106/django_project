@@ -1,6 +1,9 @@
-{% url 'home' as home_url %} {% url 'about' as about_url %} {% url
-'account_login' as login_url %} {% url 'account_signup' as signup_url %} {% url
-'account_logout' as logout_url %} {% load static %}
+{% url 'home' as home_url %} 
+{% url 'about' as about_url %} 
+{% url 'account_login' as login_url %} 
+{% url 'account_signup' as signup_url %} 
+{% url 'account_logout' as logout_url %}
+{% load static %}
 
 <!DOCTYPE html>
 <html class="h-100" lang="en">
@@ -105,12 +108,32 @@
             </li>
             {% endif %}
           </ul>
+          {% if user.is_authenticated %}
+          <p class="text-end m3">You are logged in as {{user}}</p>
+          {% else %}
           <span class="navbar-text text-muted">
             adventures of a software developer
           </span>
+          {% endif %}
+         
         </div>
       </div>
     </nav>
+    <!-- displaying Django messages -->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
+          {% for message in messages %}
+          <div class="alert {{ message.tags }} alert-dismissible
+            fade show" id="msg" role="alert">
+            {{ message | safe }}
+            <button type="button" class="btn-close"
+              data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
 
     <main class="flex-shrink-0 main-bg">
       {% block content %}
@@ -136,6 +159,7 @@
       integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
       crossorigin="anonymous"
     ></script>
-    <script src="{% static 'js/script.js' %}"></script>
+    {% block extras %}
+    {% endblock %}
   </body>
 </html>

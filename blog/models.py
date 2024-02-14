@@ -31,12 +31,12 @@ class Post(models.Model):
         return f"{self.title} | written by {self.author}"
 
 
-class Comment(models.Model):
+class Comments(models.Model):
     """create a model for manage the comments"""
     post = models.ForeignKey(
         Post,
         on_delete=models.CASCADE,
-        related_name="comment"
+        related_name="comments"
     )
     author = models.ForeignKey(
         User,
@@ -44,7 +44,7 @@ class Comment(models.Model):
         related_name="commenter"
     )
     body = models.TextField()
-    Approved = models.BooleanField(default=False)
+    approved = models.BooleanField(default=False)
     create_on = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -53,4 +53,6 @@ class Comment(models.Model):
 
     def __str__(self):
         """Methods """
-        return f"Comment {self.body} | written by {self.author}"
+        return f"Comments {self.body} | written by {self.author}"
+
+    
